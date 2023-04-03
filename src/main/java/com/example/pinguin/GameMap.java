@@ -36,7 +36,7 @@ public class GameMap extends GameApplication {
 
         onKey(KeyCode.W, () -> {
             player.translateY(-5); // move up 5 pixels
-            inc("pixelsMoved", +5);
+            inc("pixelsMoved", -5);
         });
 
         onKey(KeyCode.S, () -> {
@@ -54,6 +54,7 @@ public class GameMap extends GameApplication {
 
     @Override
     protected void initGame() {
+
 
 
         player = entityBuilder()
