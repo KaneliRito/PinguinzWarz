@@ -30,16 +30,14 @@ public class GameMap extends GameApplication {
     protected void initInput() {
 
         onKey(KeyCode.W, () -> {
-<<<<<<< HEAD
+
             player.translateY(-5); // move up 5 pixels
             inc("pixelsMoved", -5);
-=======
             if(player.getY() <= 50) return;
             else {
                 player.translateY(-5); // move down 5 pixels
                 inc("pixelsMoved", -5);
             }
->>>>>>> 7301a64880366c782f696e59cc99e4d9a704a0eb
         });
 
         onKey(KeyCode.S, () -> {
