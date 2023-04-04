@@ -66,12 +66,29 @@ public class GameMap extends GameApplication {
                 inc("pixelsMoved", +5);
             }
         });
+        onKey(KeyCode.T, () -> {
+            ball.getComponent(BallComponent.class).setTouched(true);
+        });
 
         onKey(KeyCode.UP, () -> {
             if(player2.getY() <= 50) return;
             else {
                 player2.translateY(-5); // move down 5 pixels
                 inc("pixelsMoved", -5);
+            }
+        });
+        onKey(KeyCode.LEFT, () -> {
+            if(player2.getX() <= 50) return;
+            else {
+                player2.translateX(-5); // move down 5 pixels
+                inc("pixelsMoved", -5);
+            }
+        });
+        onKey(KeyCode.RIGHT, () -> {
+            if(player2.getX() >= 1050) return;
+            else {
+                player2.translateX(5); // move down 5 pixels
+                inc("pixelsMoved", 5);
             }
         });
 
@@ -106,10 +123,11 @@ public class GameMap extends GameApplication {
         player = spawn("player", 100, 100);
         player2 = spawn("player2", 1000, 100);
         ball = spawn("ball", 300, 100);;
-        ball2 = spawn("ball", 300, 100);
-        ball3 = spawn("ball", 300, 100);
-        ball4 = spawn("ball", 300, 100);
-        ball5 = spawn("ball", 300, 100);;
+        ball.setRotation(90);
+        //ball2 = spawn("ball", 300, 100);
+        //ball3 = spawn("ball", 300, 100);
+        //ball4 = spawn("ball", 300, 100);
+        //ball5 = spawn("ball", 300, 100);;
 
         Media intropath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\Intro_mp3.mp3").toUri().toString());
         mediaPlayer = new MediaPlayer(intropath);
@@ -122,6 +140,13 @@ public class GameMap extends GameApplication {
 
 
 
+    }
+    @Override
+    protected void initPhysics() {
+        onCollisionBegin(EntityType.PLAYER, EntityType.BALL, (player2, ball) -> {
+            ball.getComponent(BallComponent.class).bounce();
+
+        });
     }
 
     @Override

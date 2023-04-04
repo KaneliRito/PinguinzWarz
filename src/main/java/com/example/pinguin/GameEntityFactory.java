@@ -48,7 +48,8 @@ public class GameEntityFactory implements EntityFactory{
         return entityBuilder(data)
                 .type(EntityType.BALL)
                 .viewWithBBox("Ball.png")
-                .with(new RandomMoveComponent(new Rectangle2D(200, 50, 700, 500), 100))
+                //.with(new RandomMoveComponent(new Rectangle2D(200, 50, 700, 500), 100))
+                .with(new BallComponent())
                 .collidable()
                 .build();
     }
