@@ -1,5 +1,5 @@
 package com.example.pinguin;
 
 public enum EntityType {
-    PLAYER, BALL
+    PLAYER, PLAYER2, BALL, WALL
 }
