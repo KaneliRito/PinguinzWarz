@@ -1,9 +1,11 @@
 package com.example.pinguin;
 
+import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -91,29 +93,28 @@ public class GameMap extends GameApplication {
     private Entity player2;
 
     private Entity ball;
+    private Entity ball2;
+    private Entity ball3;
+    private Entity ball4;
+    private Entity ball5;
 
     @Override
     protected void initGame() {
 
+        getGameWorld().addEntityFactory(new GameEntityFactory());
 
+        player = spawn("player", 100, 100);
+        player2 = spawn("player2", 1000, 100);
+        ball = spawn("ball", 300, 100);;
+        ball2 = spawn("ball", 300, 100);
+        ball3 = spawn("ball", 300, 100);
+        ball4 = spawn("ball", 300, 100);
+        ball5 = spawn("ball", 300, 100);;
 
-        player = entityBuilder()
-                .at(100, 100)
-                .view(new Rectangle(25, 25, Color.BLUE))
-                .buildAndAttach();
-        player2 = entityBuilder()
-                .at(1000, 100)
-                .view(new Rectangle(25, 25, Color.RED))
-                .buildAndAttach();
-        ball = entityBuilder()
-                .at(900, 100)
-                .view(new Rectangle(25, 25, Color.RED))
-                .buildAndAttach();
-
-        Media intropath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\Intro_mp3.mp3").toUri().toString());
+        Media intropath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\Intro_mp3.mp3").toUri().toString());
         mediaPlayer = new MediaPlayer(intropath);
 
-        Media secondPath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\battle_01_mp3.mp3").toUri().toString());
+        Media secondPath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\battle_01_mp3.mp3").toUri().toString());
         secondMediaPlayer = new MediaPlayer(secondPath);
 
 
