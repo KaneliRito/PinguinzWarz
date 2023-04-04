@@ -4,6 +4,8 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -17,17 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.Group;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 import java.nio.file.Paths;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.nio.file.Paths;
-
-
-
-
-
+import com.almasb.fxgl.texture.*;
 import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.audio.Music;
+
 
 
 public class GameMap extends GameApplication {
@@ -41,12 +37,18 @@ public class GameMap extends GameApplication {
         settings.setWidth(1100);
         settings.setHeight(600);
         settings.setTitle("PinguinzWarz");
-        settings.setVersion("0.1");
+        settings.setVersion("1.0dev");
+        settings.setIntroEnabled(false);
+        settings.setGameMenuEnabled(true);
+        settings.setFullScreenAllowed(true);
+
 
     }
 
     @Override
     protected void initInput() {
+
+
 
         onKey(KeyCode.W, () -> {
             if(player.getY() <= 50) return;
@@ -75,7 +77,7 @@ public class GameMap extends GameApplication {
 
         onKey(KeyCode.DOWN, () -> {
             if(player2.getY() >= 500) return;
-                else {
+            else {
                 player2.translateY(5); // move down 5 pixels
                 inc("pixelsMoved", +5);
             }
@@ -99,23 +101,24 @@ public class GameMap extends GameApplication {
 
         player = entityBuilder()
                 .at(100, 100)
-                .view(new Rectangle(25, 25, Color.BLUE))
+                .bbox(new HitBox(BoundingShape.box(30, 30)))
+//                .view(new Rectangle(25, 25, Color.BLUE))
+                .with(new AnimationComponent())
                 .buildAndAttach();
         player2 = entityBuilder()
                 .at(1000, 100)
-                .view(new Rectangle(25, 25, Color.RED))
+                .with(new AnimationComponent())
                 .buildAndAttach();
         ball = entityBuilder()
                 .at(900, 100)
                 .view(new Rectangle(25, 25, Color.RED))
                 .buildAndAttach();
 
-        Media intropath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\Intro_mp3.mp3").toUri().toString());
-        mediaPlayer = new MediaPlayer(intropath);
-
-        Media secondPath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\battle_01_mp3.mp3").toUri().toString());
-        secondMediaPlayer = new MediaPlayer(secondPath);
-
+//        Media intropath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\Intro_mp3.mp3").toUri().toString());
+//        mediaPlayer = new MediaPlayer(intropath);
+//
+//        Media secondPath = new Media(Paths.get("C:\\Users\\trent\\OneDrive - Hogeschool Leiden\\HBO informatica\\se-lol\\src\\main\\java\\com\\example\\pinguin\\battle_01_mp3.mp3").toUri().toString());
+//        secondMediaPlayer = new MediaPlayer(secondPath);
 
 
 
@@ -123,12 +126,16 @@ public class GameMap extends GameApplication {
 
     }
 
+
     @Override
     protected void initUI() {
+//        mediaPlayer.setAutoPlay(true);
+        String homeScreenSong = new String("Intro_mp3.mp3");
+        String levelOne = new String("battle_01_mp3");
+        Music homeScreenMusic = FXGL.getAssetLoader().loadMusic(homeScreenSong);
+        Music levelOneMusic = FXGL.getAssetLoader().loadMusic(levelOne);
+        FXGL.getAudioPlayer().loopMusic(homeScreenMusic);
 
-
-        mediaPlayer.setAutoPlay(true);
-        // Create a rectangle for the homescreen background
         Rectangle homeScreen = new Rectangle(0, 0, getAppWidth(), getAppHeight());
         homeScreen.setFill(Color.BLACK);
 
@@ -151,9 +158,11 @@ public class GameMap extends GameApplication {
 
         // Transition to the current screen upon pressing the "Start" button
         startText.setOnMouseClicked(event -> {
-            mediaPlayer.stop();
+            FXGL.getAudioPlayer().stopAllMusic();
+            FXGL.getAudioPlayer().loopMusic(levelOneMusic);
             getGameScene().removeUINode(homeScreenGroup);
-            secondMediaPlayer.setAutoPlay(true);
+//
+            loopBGM("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Intro_mp3.mp3?alt=media&token=996e3e40-b8f0-4eb1-b01a-75994eeb94cc");
             getGameWorld().addEntities(player, player2, ball);
         });
 
