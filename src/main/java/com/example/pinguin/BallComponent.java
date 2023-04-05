@@ -51,13 +51,12 @@ public class BallComponent extends Component {
     }
 
     public void onUpdate(double tpf) {
-        if(isTouched) {
-            limitVelocity();
-            checkOffscreen();
+        if(!isTouched) {
+            physics.setVelocityX(0);
         }
         else{
-            physics.setVelocityX(0);
-            physics.setVelocityY(0);
+            limitVelocity();
+            checkOffscreen();
         }
     }
 

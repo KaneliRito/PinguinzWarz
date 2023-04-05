@@ -1,17 +1,13 @@
 package com.example.pinguin;
 
-import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
-import javafx.scene.Scene;
+import com.example.pinguin.Levels.Level1;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -25,14 +21,8 @@ import javafx.scene.Group;
 import com.almasb.fxgl.audio.Music;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
+
 import java.nio.file.Paths;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.nio.file.Paths;
-
-
-
 
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -42,8 +32,12 @@ public class GameMap extends GameApplication {
     private MediaPlayer mediaPlayer;
     private MediaPlayer secondMediaPlayer;
 
+    private Entity playerentity;
+    private Entity player2entity;
     private PlayerComponent player;
     private PlayerComponent player2;
+    private Level1 level1;
+    //private InputController inputController;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -52,6 +46,7 @@ public class GameMap extends GameApplication {
         settings.setHeight(600);
         settings.setTitle("PinguinzWarz");
         settings.setVersion("0.1");
+        level1 = new Level1();
 
     }
 
@@ -59,22 +54,16 @@ public class GameMap extends GameApplication {
     protected void initInput() {
 
         onKey(KeyCode.T, () -> {
-            ball.getComponent(BallComponent.class).setTouched(true);
-            ball2.getComponent(BallComponent.class).setTouched(true);
-            ball3.getComponent(BallComponent.class).setTouched(true);
-            ball4.getComponent(BallComponent.class).setTouched(true);
-            ball5.getComponent(BallComponent.class).setTouched(true);
-            ball6.getComponent(BallComponent.class).setTouched(true);
-            ball7.getComponent(BallComponent.class).setTouched(true);
-            ball8.getComponent(BallComponent.class).setTouched(true);
-            ball9.getComponent(BallComponent.class).setTouched(true);
-
+            System.out.println("x: " + playerentity.getX());
+            System.out.println("y: " + playerentity.getY());
         });
+        /*if(level1 != null){
+            inputController = new InputController(player,player2,level1);
+            inputController.initInput();
+        }*/
         getInput().addAction(new UserAction("Up") {
             @Override
-            protected void onAction() {
-                player.up();
-            }
+            protected void onAction() { player.up(level1.getUpperWall()); }
 
             @Override
             protected void onActionEnd() {
@@ -85,7 +74,7 @@ public class GameMap extends GameApplication {
         getInput().addAction(new UserAction("Down") {
             @Override
             protected void onAction() {
-                player.down();
+                player.down(level1.getLowerWall());
             }
 
             @Override
@@ -93,23 +82,26 @@ public class GameMap extends GameApplication {
                 player.stop();
             }
         }, KeyCode.S);
-        getInput().addAction(new UserAction("Up2") {
+
+        getInput().addAction(new UserAction("Shoot") {
             @Override
             protected void onAction() {
-                player2.up();
-            }
-
+                for(int i = 0; i < level1.ballList.size();i++ ){
+                    player.shootBall(level1.ballList.get(i));
+                }}
             @Override
-            protected void onActionEnd() {
-                player2.stop();
-            }
+            protected void onActionEnd() { player.stop();}
+        }, KeyCode.D);
+        getInput().addAction(new UserAction("Up2") {
+            @Override
+            protected void onAction() { player2.up(level1.getUpperWall());}
+            @Override
+            protected void onActionEnd() { player2.stop();}
         }, KeyCode.UP);
 
         getInput().addAction(new UserAction("Down2") {
             @Override
-            protected void onAction() {
-                player2.down();
-            }
+            protected void onAction() {player2.down(level1.getLowerWall());}
 
             @Override
             protected void onActionEnd() {
@@ -125,77 +117,28 @@ public class GameMap extends GameApplication {
         vars.put("player2score", 0);
     }
 
-    private Entity playerentity;
-    private Entity player2entity;
-
-    private Entity ball;
-    private Entity ball2;
-    private Entity ball3;
-    private Entity ball4;
-    private Entity ball5;
-    private Entity ball6;
-    private Entity ball7;
-    private Entity ball8;
-    private Entity ball9;
-    private Entity upperWall;
-    private Entity lowerWall;
-    private Entity movingWall;
-
     @Override
     protected void initGame() {
 
         getGameWorld().addEntityFactory(new GameEntityFactory());
-        initScreenBounds();
 
         playerentity = spawn("player", 100, 100);
         player2entity = spawn("player2", 1000, 100);
-        ball = spawn("ball", 300, 100);;
-
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
-        ball2 = spawn("ball", 400, 100);
-        ball3 = spawn("ball", 500, 100);
-        ball4 = spawn("ball", 300, 200);
-        ball5 = spawn("ball", 400, 200);
-        ball6 = spawn("ball", 500, 200);
-        ball7 = spawn("ball", 600, 200);
-        ball8 = spawn("ball", 500, 100);
-        ball9 = spawn("ball", 600, 100);
-        lowerWall = spawn("sidewall",0,550);
-        upperWall = spawn("sidewall",0,50);
-        movingWall = spawn("movingwall",300,300);
+        level1.spawnEntity();
 
-        if(movingWall.getY() >=500) movingWall.getComponent(WallComponent.class).setChanged(true);
-        if(movingWall.getY() <=400) movingWall.getComponent(WallComponent.class).setChanged(false);
+        initScreenBounds();
 
         Media intropath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\Intro_mp3.mp3").toUri().toString());
         mediaPlayer = new MediaPlayer(intropath);
 
         Media secondPath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\battle_01_mp3.mp3").toUri().toString());
         secondMediaPlayer = new MediaPlayer(secondPath);
-
-
-
-
-
-
     }
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 0);
-
-        //CollisionHandler ballCharHandler = new CollisionHandler(EntityType.BALL, EntityType.PLAYER) {
-           // @Override
-           // protected void onCollisionBegin(Entity a, Entity b) {
-           //     play("hit_bat.wav");
-           // }
-       // };
-
-        //getPhysicsWorld().addCollisionHandler(ballCharHandler);
-        /*onCollisionBegin(EntityType.PLAYER, EntityType.BALL, (player2, ball) -> {
-            ball.getComponent(BallComponent.class).bounce();
-
-        });*/
     }
     private void createButtons(String[] buttonLabels, Group containerGroup) {
         List<Text> buttonList = new ArrayList<>();
@@ -225,27 +168,23 @@ public class GameMap extends GameApplication {
                     Music easy = FXGL.getAssetLoader().loadMusic(easyTrack);
                     FXGL.getAudioPlayer().loopMusic(easy);
                     getGameScene().removeUINode(containerGroup);
-                    getGameWorld().addEntities(playerentity, player2entity, ball);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
                 } else if (buttonTextStr.equals("Normal")) {
                     Music normal = FXGL.getAssetLoader().loadMusic(normalTrack);
                     FXGL.getAudioPlayer().loopMusic(normal);
                     getGameScene().removeUINode(containerGroup);
-                    getGameWorld().addEntities(playerentity, player2entity, ball);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
 
                 } else if (buttonTextStr.equals("Hard")) {
                     Music hard = FXGL.getAssetLoader().loadMusic(hardTrack);
                     FXGL.getAudioPlayer().loopMusic(hard);
                     getGameScene().removeUINode(containerGroup);
-                    getGameWorld().addEntities(playerentity, player2entity, ball);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert.jpg?alt=media&token=ee7446fc-c63a-4464-b653-8a48e48af8d2", 1100, 600, false, true));
 
                 } else if (buttonTextStr.equals("Nightmare")) {
                     Music nightmare = FXGL.getAssetLoader().loadMusic(nightmareTrack);
                     FXGL.getAudioPlayer().loopMusic(nightmare);
                     getGameScene().removeUINode(containerGroup);
-                    getGameWorld().addEntities(playerentity, player2entity, ball);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
 
                 }
@@ -297,7 +236,7 @@ public class GameMap extends GameApplication {
             mediaPlayer.stop();
             getGameScene().removeUINode(homeScreenGroup);
             secondMediaPlayer.setAutoPlay(true);
-            getGameWorld().addEntities(playerentity, player2entity, ball);
+            //getGameWorld().addEntities(playerentity, player2entity, ball);
         });
 
         // Set the game scene background
@@ -311,6 +250,13 @@ public class GameMap extends GameApplication {
 
         getGameWorld().addEntity(walls);
     }
+
+   @Override
+    protected void onUpdate(double tpf) {
+        super.onUpdate(tpf);
+        level1.wallSwap();
+    }
+
 
     public static void main(String[] args) {
         launch(args);

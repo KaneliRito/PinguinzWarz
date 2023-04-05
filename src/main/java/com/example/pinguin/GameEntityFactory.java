@@ -52,7 +52,6 @@ public class GameEntityFactory implements EntityFactory{
                 .type(EntityType.PLAYER2)
                 //.viewWithBBox("player.png")
                 .with(new CollidableComponent(true))
-                //.viewWithBBox(new Rectangle(25, 25, Color.RED))
                 .bbox(new HitBox(BoundingShape.box(25,25)))
                 .with(physics)
                 .with(new PlayerComponent())

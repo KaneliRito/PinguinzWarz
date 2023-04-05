@@ -10,4 +10,5 @@ open module com.example.pinguin {
 
     //opens com.example.pinguin to javafx.fxml;
     exports com.example.pinguin;
+    exports com.example.pinguin.Levels;
 }
