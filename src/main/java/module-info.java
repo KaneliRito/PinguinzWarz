@@ -4,6 +4,8 @@ module com.example.pinguin {
 
     requires com.almasb.fxgl.all;
     requires javafx.media;
+    requires java.desktop;
+    requires com.google.gson;
 
     opens assets.textures;
 
