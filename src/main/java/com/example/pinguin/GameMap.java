@@ -281,7 +281,7 @@ public class GameMap extends GameApplication {
                     FXGL.getAudioPlayer().loopMusic(hard);
                     getGameScene().removeUINode(containerGroup);
                     getGameWorld().addEntities(playerentity, player2entity, ball);
-                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
+                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert.jpg?alt=media&token=ee7446fc-c63a-4464-b653-8a48e48af8d2", 1100, 600, false, true));
 
                 } else if (buttonTextStr.equals("Nightmare")) {
                     Music nightmare = FXGL.getAssetLoader().loadMusic(nightmareTrack);

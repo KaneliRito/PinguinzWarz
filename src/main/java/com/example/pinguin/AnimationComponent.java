@@ -5,6 +5,7 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 
+import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
 
@@ -16,8 +17,8 @@ public class AnimationComponent extends Component {
 
 //       Image image = new Image("player.png");
 
-        animIdle = new AnimationChannel(FXGL.image("player.png"),4, 128/4,42, Duration.seconds(1), 1,1);
-        animWalk = new AnimationChannel(FXGL.image("player.png"),4, 128/4,42, Duration.seconds(1), 0,3);
+        animIdle = new AnimationChannel(FXGL.image("player3.png"),4, 128/4,42, Duration.seconds(1), 1,1);
+        animWalk = new AnimationChannel(FXGL.image("player3.png"),4, 128/4,42, Duration.seconds(1), 0,3);
 
         texture = new AnimatedTexture(animIdle);
 
@@ -27,6 +28,9 @@ public class AnimationComponent extends Component {
 
     @Override
     public void onAdded() {
+
+        entity.setScaleX(-2); // increase the X scale by 2
+        entity.setScaleY(2);
         entity.getViewComponent().addChild(texture);
     }
 
