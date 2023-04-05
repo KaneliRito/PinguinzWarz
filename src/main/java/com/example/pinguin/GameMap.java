@@ -13,16 +13,13 @@ import com.example.pinguin.Levels.Level2;
 import javafx.scene.control.Label;
 
 import com.example.pinguin.Levels.Level1;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-
 import javafx.scene.input.KeyEvent;
-
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,25 +28,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
 import com.almasb.fxgl.audio.Music;
-
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
 import javafx.scene.input.MouseEvent;
-
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-
-
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import java.nio.file.Paths;
 
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -159,7 +143,8 @@ public class GameMap extends GameApplication {
         player2entity = spawn("player2", 950, 100);
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
-        level1.spawnEntity();
+//
+
 
         initScreenBounds();
 
@@ -202,7 +187,7 @@ public class GameMap extends GameApplication {
         String nightmareTrack = "nightmareMode.mp3";
 
         // Define the color of the "Nightmare" button
-        final Color NIGHTMARE_BUTTON_COLOR = Color.DARKRED;
+        final Color NIGHTMARE_BUTTON_COLOR = Color.RED;
 
         for (int i = 0; i < buttonLabels.length; i++) {
             Text buttonText = new Text(buttonLabels[i]);
@@ -211,7 +196,7 @@ public class GameMap extends GameApplication {
             if (buttonLabels[i].equals("Nightmare")) {
                 buttonText.setFill(NIGHTMARE_BUTTON_COLOR);
             } else {
-                buttonText.setFill(Color.LIGHTGREY);
+                buttonText.setFill(Color.WHITE);
             }
 
             double centerX = getAppWidth() / 2 - buttonText.getLayoutBounds().getWidth() / 2;
@@ -232,35 +217,26 @@ public class GameMap extends GameApplication {
                     Music easy = FXGL.getAssetLoader().loadMusic(easyTrack);
                     FXGL.getAudioPlayer().loopMusic(easy);
                     getGameScene().removeUINode(containerGroup);
-
-
-
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
+                    level1.spawnEntity();
                 } else if (buttonTextStr.equals("Normal")) {
                     Music normal = FXGL.getAssetLoader().loadMusic(normalTrack);
                     FXGL.getAudioPlayer().loopMusic(normal);
                     getGameScene().removeUINode(containerGroup);
-
-//                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert.jpg?alt=media&token=ee7446fc-c63a-4464-b653-8a48e48af8d2", 1100, 600, false, true));
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert1.jpg?alt=media&token=a3f398b9-aa7d-4d1f-a0ce-2b3092e2a185", 1100, 600, false, true));
-                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
-
+                    level2.spawnEntity();
                 } else if (buttonTextStr.equals("Hard")) {
                     Music hard = FXGL.getAssetLoader().loadMusic(hardTrack);
                     FXGL.getAudioPlayer().loopMusic(hard);
                     getGameScene().removeUINode(containerGroup);
-
-                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert1.jpg?alt=media&token=a3f398b9-aa7d-4d1f-a0ce-2b3092e2a185", 1100, 600, false, true));
-
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert.jpg?alt=media&token=ee7446fc-c63a-4464-b653-8a48e48af8d2", 1100, 600, false, true));
-
+                    level2.spawnEntity();
                 } else if (buttonTextStr.equals("Nightmare")) {
                     Music nightmare = FXGL.getAssetLoader().loadMusic(nightmareTrack);
                     FXGL.getAudioPlayer().loopMusic(nightmare);
                     getGameScene().removeUINode(containerGroup);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/stones.png?alt=media&token=a0a02a75-b79a-46db-951a-bfcdb5fb1319", 1100, 600, false, true));
-                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
-
+                    level2.spawnEntity();
                 }
 
                 // Add code to start the game here
@@ -277,6 +253,9 @@ public class GameMap extends GameApplication {
     protected void initUI() {
             //Login Screen
             GridPane root = new GridPane();
+            root.setBackground(new Background(new BackgroundImage(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/homescreen_background1.jpg?alt=media&token=7575cd09-584f-4727-97b0-a2194982346e", 1100, 600, false, true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+
             root.setMinWidth(1100);
             root.setMinHeight(600);
             root.setHgap(10);
@@ -288,13 +267,19 @@ public class GameMap extends GameApplication {
             root.getColumnConstraints().add(col1);
 
             Text loginText = new Text("Log in");
-            loginText.setFont(new Font("Arial", 17.5));
+            loginText.setFont(new Font("Impact", 30));
+            loginText.setFill(Color.YELLOW);
+
 
             Text userText = new Text("Username: ");
             TextField userInput = new TextField();
+            userText.setFont(new Font("Impact", 30));
+            userText.setFill(Color.YELLOW);
 
             Text passwordText = new Text("Password: ");
             TextField passwordInput = new TextField();
+            passwordText.setFont(new Font("Impact", 30));
+            passwordText.setFill(Color.YELLOW);
 
             Button cancelButton = new Button("Cancel");
             Button submitButton = new Button("Submit");
@@ -429,6 +414,7 @@ public class GameMap extends GameApplication {
     protected void onUpdate(double tpf) {
         super.onUpdate(tpf);
         level1.wallSwap();
+
     }
 
 

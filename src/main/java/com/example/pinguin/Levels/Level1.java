@@ -29,14 +29,20 @@ public class Level1 implements Level {
     public void spawnEntity(){
         lowerWall = spawn("sidewall",0,550);
         upperWall = spawn("sidewall",0,50);
+        movingWall = spawn("movingwall",300,300);
+        movingWall2 = spawn("movingwall",500,200);
+        movingWall3 = spawn("movingwall",700,400);
         ball = spawn("ball", 145, 100);
+        ball2 = spawn("ball", 145, 200);
+        ball3 = spawn("ball", 145, 300);
         ballList.add(ball);
-
+        ballList.add(ball2);
+        ballList.add(ball3);
     }
     public void wallSwap() {
         if(lowerWall != null){
             movingWall.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
-
-        }
+            movingWall2.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
+            movingWall3.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);}
     }
 }
