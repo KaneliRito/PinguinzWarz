@@ -27,10 +27,19 @@ public class PlayerComponent extends Component {
     }
 
     public void shootBall(Entity ball){
-        if(ball.getY() -30 <= entity.getY() &&entity.getY() <= ball.getY() && entity.getX() <= ball.getX() + 5){
-            ball.getComponent(BallComponent.class).setTouched(true);
-            System.out.println("Shooting");
+        if(entity.isType(EntityType.PLAYER)){
+            if(ball.getY() -30 <= entity.getY() &&entity.getY() <= ball.getY() && ball.getX() - 100 <= entity.getX() && entity.getX() <= ball.getX() + 5){
+                ball.getComponent(BallComponent.class).setTouched(true);
+                System.out.println("Shooting");
+            }
         }
+        else{
+            if(ball.getY()  >= entity.getY() &&entity.getY() + 30 >= ball.getY() && entity.getX() >= ball.getX() + 5 && ball.getX() - 100 >= entity.getX()){
+                ball.getComponent(BallComponent.class).setTouched(true);
+                System.out.println("Shooting");
+            }
+        }
+
     }
 
     public void stop() {

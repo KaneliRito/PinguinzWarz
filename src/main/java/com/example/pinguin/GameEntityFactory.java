@@ -64,12 +64,12 @@ public class GameEntityFactory implements EntityFactory{
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(1.0f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(5 * 60, -5 * 60));
+        //physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(5 * 60, -5 * 60));
 
         return entityBuilder(data)
                 .type(EntityType.BALL)
                 .view("Ball.png")
-                .bbox(new HitBox(BoundingShape.circle(10)))
+                .bbox(new HitBox(BoundingShape.circle(12)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new BallComponent())

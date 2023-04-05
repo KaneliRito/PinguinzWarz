@@ -3,6 +3,7 @@ package com.example.pinguin;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import javafx.geometry.Point2D;
 
 import java.util.Random;

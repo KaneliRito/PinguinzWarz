@@ -108,6 +108,15 @@ public class GameMap extends GameApplication {
                 player2.stop();
             }
         }, KeyCode.DOWN);
+        getInput().addAction(new UserAction("Shoot2") {
+            @Override
+            protected void onAction() {
+                for(int i = 0; i < level1.ballList.size();i++ ){
+                    player2.shootBall(level1.ballList.get(i));
+                }}
+            @Override
+            protected void onActionEnd() { player.stop();}
+        }, KeyCode.LEFT);
     }
 
     @Override
@@ -123,7 +132,7 @@ public class GameMap extends GameApplication {
         getGameWorld().addEntityFactory(new GameEntityFactory());
 
         playerentity = spawn("player", 100, 100);
-        player2entity = spawn("player2", 1000, 100);
+        player2entity = spawn("player2", 950, 100);
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
         level1.spawnEntity();
