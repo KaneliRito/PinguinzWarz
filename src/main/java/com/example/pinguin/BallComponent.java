@@ -18,7 +18,7 @@ public class BallComponent extends Component {
     private Boolean isTouched = false;
     Random r = new Random();
     int low = -300;
-    int high = 300;
+    int high = 200;
 
 
     public Boolean getTouched() {
