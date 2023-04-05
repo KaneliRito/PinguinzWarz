@@ -4,8 +4,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
-import com.almasb.fxgl.entity.*;
-import javafx.scene.image.Image;
+
 import javafx.util.Duration;
 
 
@@ -15,7 +14,7 @@ public class AnimationComponent extends Component {
 
     public AnimationComponent(){
 
-//        Image image = new Image("player.png");
+//       Image image = new Image("player.png");
 
         animIdle = new AnimationChannel(FXGL.image("player.png"),4, 128/4,42, Duration.seconds(1), 1,1);
         animWalk = new AnimationChannel(FXGL.image("player.png"),4, 128/4,42, Duration.seconds(1), 0,3);
@@ -25,6 +24,7 @@ public class AnimationComponent extends Component {
         texture.loopAnimationChannel(animWalk);
 
     }
+
     @Override
     public void onAdded() {
         entity.getViewComponent().addChild(texture);
