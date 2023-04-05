@@ -13,11 +13,11 @@ import static java.lang.Math.signum;
 
 public class BallComponent extends Component {
 
-    public PhysicsComponent physics;
-    public Boolean isTouched = false;
+    private PhysicsComponent physics;
+    private Boolean isTouched = false;
     Random r = new Random();
     int low = -300;
-    int high = 300;
+    int high = 200;
 
 
     public Boolean getTouched() {
@@ -30,7 +30,7 @@ public class BallComponent extends Component {
         physics.setVelocityY(r.nextInt(high-low) + low);
     }
 
-    public void limitVelocity() {
+    private void limitVelocity() {
         // we don't want the ball to move too slow in X direction
         if (abs(physics.getVelocityX()) < 5 * 60) {
             physics.setVelocityX(signum(physics.getVelocityX()) * 5 * 60);
@@ -41,7 +41,7 @@ public class BallComponent extends Component {
             physics.setVelocityY(signum(physics.getVelocityY()) * 5 * 60);
         }
     }
-    public void checkOffscreen() {
+    private void checkOffscreen() {
         if (getEntity().getBoundingBoxComponent().isOutside(getGameScene().getViewport().getVisibleArea())) {
             physics.overwritePosition(new Point2D(
                     getAppWidth() / 2,
@@ -51,13 +51,12 @@ public class BallComponent extends Component {
     }
 
     public void onUpdate(double tpf) {
-        if(isTouched) {
-            limitVelocity();
-            checkOffscreen();
+        if(!isTouched) {
+            physics.setVelocityX(0);
         }
         else{
-            physics.setVelocityX(0);
-            physics.setVelocityY(0);
+            limitVelocity();
+            checkOffscreen();
         }
     }
 

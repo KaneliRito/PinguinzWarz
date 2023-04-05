@@ -5,8 +5,11 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 public class WallComponent extends Component {
-    public PhysicsComponent physics;
-    public Boolean isChanged = false;
+    private PhysicsComponent physics;
+    private Boolean isChanged = false;
+
+    private static final double WALL_SPEED_UP = -50;
+    private static final double WALL_SPEED_DOWN = 50;
 
     public Boolean getChanged() {
         return isChanged;
@@ -16,12 +19,20 @@ public class WallComponent extends Component {
         isChanged = changed;
     }
 
-    public void wallMovement(double speed){
-        if(isChanged) physics.setVelocityY(speed);
-        else physics.setVelocityY(-speed);
+    public void swapMovement(Entity wall, Entity wall2){
+        //System.out.println("Wall" + getEntity().getY());
+
+        if(getEntity().getY() >= (wall.getY() - 100) && !isChanged ){
+            isChanged = true;
+        }
+        else if(getEntity().getY() <= (wall2.getY() + 100) && isChanged){
+            isChanged = false;
+        }
     }
 
     public void onUpdate(double tpf){
-        wallMovement(10);
+        if(isChanged) physics.setVelocityY(WALL_SPEED_UP);
+        else physics.setVelocityY(WALL_SPEED_DOWN);
+
     }
 }

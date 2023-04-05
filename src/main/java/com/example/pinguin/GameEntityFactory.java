@@ -25,15 +25,13 @@ public class GameEntityFactory implements EntityFactory{
                 .from(data)
                 .type(EntityType.PLAYER)
                 //.viewWithBBox("player.png")
-                .bbox(new HitBox(BoundingShape.box(25,25)))
+                .bbox(new HitBox(BoundingShape.box(20,30)))
                 .with(new CollidableComponent(true))
                 .with(physics)
                 .with(new PlayerComponent())
                 .with(new AnimationComponent())
-                //.at(1000, 100)
 //                .viewWithBBox(new Rectangle(25, 25, Color.BLUE)
                 .build();
-                //.build();
     }
     @Spawns("player2")
     public Entity newPlayer2(SpawnData data) {
@@ -45,14 +43,11 @@ public class GameEntityFactory implements EntityFactory{
                 .type(EntityType.PLAYER2)
                 //.viewWithBBox("player.png")
                 .with(new CollidableComponent(true))
-                .bbox(new HitBox(BoundingShape.box(25,25)))
+                .bbox(new HitBox(BoundingShape.box(20,30)))
                 .with(physics)
                 .with(new PlayerComponent())
-                //.at(1000, 100)
                 .with(animationComponent)
-//                .viewWithBBox(new Rectangle(25, 25, Color.RED))
                 .build();
-        //.build();
     }
 
     @Spawns("ball")
@@ -60,12 +55,12 @@ public class GameEntityFactory implements EntityFactory{
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(1.0f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(5 * 60, -5 * 60));
+        //physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(5 * 60, -5 * 60));
 
         return entityBuilder(data)
                 .type(EntityType.BALL)
                 .view("Ball.png")
-                .bbox(new HitBox(BoundingShape.circle(10)))
+                .bbox(new HitBox(BoundingShape.circle(13)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new BallComponent())
@@ -92,7 +87,7 @@ public class GameEntityFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(EntityType.WALL)
-                .viewWithBBox(new Rectangle(20, 60, Color.BROWN))
+                .viewWithBBox(new Rectangle(20, 60, Color.BLACK))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new WallComponent())

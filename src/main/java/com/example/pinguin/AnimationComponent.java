@@ -27,8 +27,8 @@ public class AnimationComponent extends Component {
     @Override
     public void onAdded() {
 
-        entity.setScaleX(-2); // increase the X scale by 2
-        entity.setScaleY(2);
+        entity.setScaleX(-3); // increase the X scale by 2
+        entity.setScaleY(3);
         entity.getViewComponent().addChild(texture);
     }
 
