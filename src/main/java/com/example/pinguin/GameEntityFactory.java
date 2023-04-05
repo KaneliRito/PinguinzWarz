@@ -34,52 +34,30 @@ public class GameEntityFactory implements EntityFactory{
                 .from(data)
                 .type(EntityType.PLAYER)
                 //.viewWithBBox("player.png")
-<<<<<<< HEAD
-                .with(new CollidableComponent(true))
-                .with(physics)
-                .with(new PlayerComponent())
-                //.at(1000, 100)
-                .viewWithBBox(new Rectangle(25, 25, Color.BLUE))
-=======
                 .bbox(new HitBox(BoundingShape.box(25,25)))
                 .with(new CollidableComponent(true))
                 .with(physics)
                 .with(new PlayerComponent())
                 .with(new AnimationComponent())
-                //.at(1000, 100)
 //                .viewWithBBox(new Rectangle(25, 25, Color.BLUE)
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
                 .build();
-                //.build();
     }
     @Spawns("player2")
     public Entity newPlayer2(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
-<<<<<<< HEAD
-=======
         AnimationComponent animationComponent = new AnimationComponent();
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
         physics.setBodyType(BodyType.KINEMATIC);
         return entityBuilder()
                 .from(data)
                 .type(EntityType.PLAYER2)
                 //.viewWithBBox("player.png")
                 .with(new CollidableComponent(true))
-<<<<<<< HEAD
-                .with(physics)
-                .with(new PlayerComponent())
-                //.at(1000, 100)
-                .viewWithBBox(new Rectangle(25, 25, Color.RED))
-=======
+                //.viewWithBBox(new Rectangle(25, 25, Color.RED))
                 .bbox(new HitBox(BoundingShape.box(25,25)))
                 .with(physics)
                 .with(new PlayerComponent())
-                //.at(1000, 100)
                 .with(animationComponent)
-//                .viewWithBBox(new Rectangle(25, 25, Color.RED))
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
                 .build();
-        //.build();
     }
 
     @Spawns("ball")

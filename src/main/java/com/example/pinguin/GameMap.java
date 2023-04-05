@@ -58,22 +58,6 @@ public class GameMap extends GameApplication {
     @Override
     protected void initInput() {
 
-       /* onKey(KeyCode.W, () -> {
-            if(player.getY() <= 50) return;
-            else {
-                player.translateY(-5); // move down 5 pixels
-                inc("pixelsMoved", -5);
-            }
-        });
-
-
-        onKey(KeyCode.S, () -> {
-            if(player.getY() >= 500) return;
-            else {
-                player.translateY(5); // move down 5 pixels
-                inc("pixelsMoved", +5);
-            }
-        });*/
         onKey(KeyCode.T, () -> {
             ball.getComponent(BallComponent.class).setTouched(true);
             ball2.getComponent(BallComponent.class).setTouched(true);
@@ -114,7 +98,6 @@ public class GameMap extends GameApplication {
             protected void onAction() {
                 player2.up();
             }
-<<<<<<< HEAD
 
             @Override
             protected void onActionEnd() {
@@ -133,57 +116,6 @@ public class GameMap extends GameApplication {
                 player2.stop();
             }
         }, KeyCode.DOWN);
-
-=======
-
-            @Override
-            protected void onActionEnd() {
-                player2.stop();
-            }
-        }, KeyCode.UP);
-
-        getInput().addAction(new UserAction("Down2") {
-            @Override
-            protected void onAction() {
-                player2.down();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                player2.stop();
-            }
-        }, KeyCode.DOWN);
-
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
-        /*onKey(KeyCode.UP, () -> {
-            if(player2.getY() <= 50) return;
-            else {
-                //player2.translateY(-5); // move down 5 pixels
-               // inc("pixelsMoved", -5);
-            }
-        });
-        onKey(KeyCode.LEFT, () -> {
-            if(player2.getX() <= 50) return;
-            else {
-                player2.translateX(-5); // move down 5 pixels
-                inc("pixelsMoved", -5);
-            }
-        });
-        onKey(KeyCode.RIGHT, () -> {
-            if(player2.getX() >= 1050) return;
-            else {
-                player2.translateX(5); // move down 5 pixels
-                inc("pixelsMoved", 5);
-            }
-        });
-
-        onKey(KeyCode.DOWN, () -> {
-            if(player2.getY() >= 500) return;
-                else {
-                player2.translateY(5); // move down 5 pixels
-                inc("pixelsMoved", +5);
-            }
-        });*/
     }
 
     @Override
@@ -218,7 +150,6 @@ public class GameMap extends GameApplication {
         playerentity = spawn("player", 100, 100);
         player2entity = spawn("player2", 1000, 100);
         ball = spawn("ball", 300, 100);;
-<<<<<<< HEAD
 
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
@@ -243,47 +174,11 @@ public class GameMap extends GameApplication {
         Media secondPath = new Media(Paths.get("D:\\Informatica\\Challengeweek\\SE Challengeweek\\PinguinzWarz\\src\\main\\resources\\assets\\sounds\\battle_01_mp3.mp3").toUri().toString());
         secondMediaPlayer = new MediaPlayer(secondPath);
 
-=======
-
-        player = playerentity.getComponent(PlayerComponent.class);
-        player2 = player2entity.getComponent(PlayerComponent.class);
-        ball2 = spawn("ball", 400, 100);
-        ball3 = spawn("ball", 500, 100);
-        ball4 = spawn("ball", 300, 200);
-        ball5 = spawn("ball", 400, 200);
-        ball6 = spawn("ball", 500, 200);
-        ball7 = spawn("ball", 600, 200);
-        ball8 = spawn("ball", 500, 100);
-        ball9 = spawn("ball", 600, 100);
-        lowerWall = spawn("sidewall",0,550);
-        upperWall = spawn("sidewall",0,50);
-        movingWall = spawn("movingwall",300,300);
-
-        if(movingWall.getY() >=500) movingWall.getComponent(WallComponent.class).setChanged(true);
-        if(movingWall.getY() <=400) movingWall.getComponent(WallComponent.class).setChanged(false);
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
 
 
 
 
 
-    }
-    @Override
-    protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 0);
-
-        //CollisionHandler ballCharHandler = new CollisionHandler(EntityType.BALL, EntityType.PLAYER) {
-           // @Override
-           // protected void onCollisionBegin(Entity a, Entity b) {
-           //     play("hit_bat.wav");
-           // }
-       // };
-
-        //getPhysicsWorld().addCollisionHandler(ballCharHandler);
-        /*onCollisionBegin(EntityType.PLAYER, EntityType.BALL, (player2, ball) -> {
-            ball.getComponent(BallComponent.class).bounce();
-
-        });*/
     }
     @Override
     protected void initPhysics() {
@@ -398,16 +293,12 @@ public class GameMap extends GameApplication {
         getGameScene().addUINode(homeScreenGroup);
 
         // Transition to the current screen upon pressing the "Start" button
-<<<<<<< HEAD
         startText.setOnMouseClicked(event -> {
             mediaPlayer.stop();
             getGameScene().removeUINode(homeScreenGroup);
             secondMediaPlayer.setAutoPlay(true);
             getGameWorld().addEntities(playerentity, player2entity, ball);
         });
-=======
-
->>>>>>> 05af9c2535e2210609b374db88a7bf60037e453c
 
         // Set the game scene background
     }
