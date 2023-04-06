@@ -24,10 +24,21 @@ public class BallComponent extends Component {
         return isTouched;
     }
 
-    public void setTouched(Boolean touched) {
+    public void setTouched(Boolean touched, int playernum) {
         isTouched = touched;
-        physics.setVelocityX(150);
-        physics.setVelocityY(r.nextInt(high-low) + low);
+        switch(playernum){
+            case(1):{
+                physics.setVelocityX(150);
+                physics.setVelocityY(r.nextInt(high-low) + low);
+                break;
+            }
+            case(2):{
+                physics.setVelocityX(-150);
+                physics.setVelocityY(-(r.nextInt(high-low) + low));
+                break;
+            }
+        }
+
     }
 
     public void limitVelocity() {

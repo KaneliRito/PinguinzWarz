@@ -130,6 +130,15 @@ public class GameMap extends GameApplication {
                 player2.stop();
             }
         }, KeyCode.DOWN);
+        getInput().addAction(new UserAction("Shoot2") {
+            @Override
+            protected void onAction() {
+                for(int i = 0; i < level1.ballList.size();i++ ){
+                    player2.shootBall(level1.ballList.get(i));
+                }}
+            @Override
+            protected void onActionEnd() { player2.stop();}
+        }, KeyCode.LEFT);
 
     }
 
@@ -156,7 +165,7 @@ public class GameMap extends GameApplication {
             }
         });
         getWorldProperties().<Integer>addListener("player2score", (old, newScore) -> {
-            if (newScore == 49) {
+            if (newScore == 50) {
                 try {
                     showGameOver("Player 2");
                 } catch (FileNotFoundException e) {
@@ -183,7 +192,7 @@ public class GameMap extends GameApplication {
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
             @Override
             protected void onCollision(Entity ball, Entity wall) {
-                if (ball.getX() >= 1075)
+                if (ball.getX() >= 1065)
                     inc("player1score", +1);
                 else if (ball.getX() <= 25)
                     inc("player2score", +1);
@@ -262,7 +271,7 @@ public class GameMap extends GameApplication {
                     getGameScene().addUINode(text2);
                     getGameScene().addUINode(score2);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
-                    level1.spawnEntity();
+                    //level1.spawnEntity();
                 } else if (buttonTextStr.equals("Normal")) {
                     Music normal = FXGL.getAssetLoader().loadMusic(normalTrack);
                     FXGL.getAudioPlayer().loopMusic(normal);

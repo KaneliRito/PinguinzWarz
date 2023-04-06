@@ -28,8 +28,8 @@ public class Level3 implements Level {
     }
 
     public void spawnEntity(){
-        lowerWall = spawn("sidewall",0,550);
-        upperWall = spawn("sidewall",0,50);
+        lowerWall = spawn("sidewall",0,570);
+        upperWall = spawn("sidewall",0,0);
         movingWall = spawn("movingwall",300,300);
         movingWall2 = spawn("movingwall",500,200);
 
