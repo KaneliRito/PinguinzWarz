@@ -53,6 +53,7 @@ public class BallComponent extends Component {
         isTouched=false;
         physics.setVelocityX(0);
         physics.setVelocityY(0);
+        physics.setAngularVelocity(0);
     }
 
     public void limitVelocity() {
@@ -66,14 +67,11 @@ public class BallComponent extends Component {
             physics.setVelocityY(signum(physics.getVelocityY()) * 5 * 60);
         }
     }
-//    public void checkOffscreen() {
-//        if (getEntity().getBoundingBoxComponent().isOutside(getGameScene().getViewport().getVisibleArea())) {
-//            physics.overwritePosition(new Point2D(
-//                    getAppWidth() / 2,
-//                    getAppHeight() / 2
-//            ));
-//        }
-//    }
+    public void checkOffscreen() {
+        if (entity.getY() >= 650 || entity.getY() <= 0){
+            resetPos();
+        }
+    }
 
     public void onUpdate(double tpf) {
         if(!isTouched) {
@@ -82,7 +80,7 @@ public class BallComponent extends Component {
         }
         else{
             limitVelocity();
-//            checkOffscreen();
+            checkOffscreen();
         }
     }
 

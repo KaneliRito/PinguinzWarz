@@ -14,6 +14,7 @@ public class WallComponent extends Component {
     public Boolean getChanged() {
         return isChanged;
     }
+    public Boolean direction = false;
 
     public void setChanged(Boolean changed) {
         isChanged = changed;
