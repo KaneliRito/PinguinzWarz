@@ -1,5 +1,7 @@
 package com.example.pinguin.Levels;
 
+
+
 import com.almasb.fxgl.entity.Entity;
 import com.example.pinguin.WallComponent;
 
@@ -8,7 +10,7 @@ import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
-public class Level1 implements Level {
+public class Level2 implements Level {
     private Entity ball;
     private Entity ball2;
     private Entity ball3;
@@ -30,9 +32,12 @@ public class Level1 implements Level {
         lowerWall = spawn("sidewall",0,570);
         upperWall = spawn("sidewall",0,0);
         movingWall = spawn("movingwall",300,300);
-        ball = spawn("ball", 145, 100);
-        ball2 = spawn("ball",895,200);
-        ballList.add(ball);
+
+
+
+        ball2 = spawn("ball", 145, 200);
+
+
         ballList.add(ball2);
 
     }
@@ -42,5 +47,6 @@ public class Level1 implements Level {
 
 
         }
+    }
+}
 
-}}

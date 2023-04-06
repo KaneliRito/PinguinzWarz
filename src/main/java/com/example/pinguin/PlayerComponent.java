@@ -8,7 +8,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 public class PlayerComponent extends Component {
     private static final double PLAYER_SPEED = 420;
 
-    protected PhysicsComponent physics;
+    public PhysicsComponent physics;
 
 
     public void up(Entity upperWall) {
@@ -29,17 +29,16 @@ public class PlayerComponent extends Component {
     public void shootBall(Entity ball){
         if(entity.isType(EntityType.PLAYER)){
             if(ball.getY() -30 <= entity.getY() &&entity.getY() <= ball.getY() && ball.getX() - 100 <= entity.getX() && entity.getX() <= ball.getX() + 5){
-                ball.getComponent(BallComponent.class).setTouched(true);
+                ball.getComponent(BallComponent.class).setTouched(true,1);
                 System.out.println("Shooting");
             }
         }
         else{
-            if(ball.getY()  >= entity.getY() &&entity.getY() + 30 >= ball.getY() && entity.getX() >= ball.getX() + 5 && ball.getX() - 100 >= entity.getX()){
-                ball.getComponent(BallComponent.class).setTouched(true);
+            if(ball.getY() -30 <= entity.getY() &&entity.getY() <= ball.getY()&& entity.getX() >= ball.getX() + 15 && ball.getX() +100  >= entity.getX()){
+                ball.getComponent(BallComponent.class).setTouched(true,2);
                 System.out.println("Shooting");
             }
         }
-
     }
 
     public void stop() {
