@@ -5,11 +5,11 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 public class WallComponent extends Component {
-    private PhysicsComponent physics;
-    private Boolean isChanged = false;
+    public PhysicsComponent physics;
+    public Boolean isChanged = false;
 
-    private static final double WALL_SPEED_UP = -50;
-    private static final double WALL_SPEED_DOWN = 50;
+    public static final double WALL_SPEED_UP = -50;
+    public static final double WALL_SPEED_DOWN = 50;
 
     public Boolean getChanged() {
         return isChanged;

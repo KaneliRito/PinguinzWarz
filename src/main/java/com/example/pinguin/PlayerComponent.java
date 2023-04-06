@@ -8,7 +8,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 public class PlayerComponent extends Component {
     private static final double PLAYER_SPEED = 420;
 
-    protected PhysicsComponent physics;
+    public PhysicsComponent physics;
 
 
     public void up(Entity upperWall) {

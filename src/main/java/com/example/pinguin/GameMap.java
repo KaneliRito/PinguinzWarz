@@ -9,10 +9,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 
 import com.almasb.fxgl.physics.CollisionHandler;
-import com.example.pinguin.Levels.Level2;
+import com.example.pinguin.Levels.*;
 import javafx.scene.control.Label;
 
-import com.example.pinguin.Levels.Level1;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,10 +19,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
@@ -50,6 +50,10 @@ public class GameMap extends GameApplication {
     private final WriteFile writer = new WriteFile();
     private Level1 level1;
     private Level2 level2;
+    private Level3 level3;
+    private Level4 level4;
+    private BaseLevel baseLevel;
+
     //private InputController inputController;
 
     @Override
@@ -61,6 +65,9 @@ public class GameMap extends GameApplication {
         settings.setVersion("0.1");
         level1 = new Level1();
         level2 = new Level2();
+        level3 = new Level3();
+        level4 = new Level4();
+        baseLevel = new BaseLevel();
 
     }
 
@@ -137,13 +144,32 @@ public class GameMap extends GameApplication {
 
     protected void createGame() {
 
-        getGameWorld().addEntityFactory(new GameEntityFactory());
 
+        getGameWorld().addEntityFactory(new GameEntityFactory());
+        getWorldProperties().<Integer>addListener("player1score", (old, newScore) -> {
+            if (newScore == 50) {
+                try {
+                    showGameOver("Player 1");
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        getWorldProperties().<Integer>addListener("player2score", (old, newScore) -> {
+            if (newScore == 49) {
+                try {
+                    showGameOver("Player 2");
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         playerentity = spawn("player", 100, 100);
         player2entity = spawn("player2", 950, 100);
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
-//
+        level1.spawnEntity();
+
 
 
         initScreenBounds();
@@ -157,28 +183,44 @@ public class GameMap extends GameApplication {
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
             @Override
             protected void onCollision(Entity ball, Entity wall) {
-                inc("player1score", +1);
-
+                if (ball.getX() >= 1075)
+                    inc("player1score", +1);
+                else if (ball.getX() <= 25)
+                    inc("player2score", +1);
             }
         });
 
     }
 
     private void createButtons(String[] buttonLabels, Group containerGroup) {
-        Label text = new Label("Score player1: ");
+        Label text = new Label("Score player1 : ");
         text.setStyle("-fx-text-fill: white");
+        text.setFont(Font.font("Impact", FontWeight.BOLD, 27));
         text.setTranslateX(10);
-        text.setTranslateY(50);
-        text.setFont(new Font(27));
+        text.setTranslateY(48);
+
         Label score = new Label("0");
         score.setStyle("-fx-text-fill: white");
         score.setTranslateX(180);
-        score.setTranslateY(50);
-        score.setFont(new Font(27));
+        score.setTranslateY(48);
+        score.setFont(Font.font("Impact", FontWeight.BOLD, 27));
+
+        Label text2 = new Label("Score player2 : ");
+        text2.setStyle("-fx-text-fill: white");
+        text2.setFont(Font.font("Impact", FontWeight.BOLD, 27));
+        text2.setTranslateX(830);
+        text2.setTranslateY(48);
+
+        Label score2 = new Label("0");
+        score2.setStyle("-fx-text-fill: white");
+        score2.setTranslateX(1000);
+        score2.setTranslateY(48);
+        score2.setFont(Font.font("Impact", FontWeight.BOLD, 27));
 
 
 
         score.textProperty().bind(getWorldProperties().intProperty("player1score").asString());
+        score2.textProperty().bind(getWorldProperties().intProperty("player2score").asString());
         List<Text> buttonList = new ArrayList<>();
 
         String easyTrack = "easyMode.mp3";
@@ -187,7 +229,7 @@ public class GameMap extends GameApplication {
         String nightmareTrack = "nightmareMode.mp3";
 
         // Define the color of the "Nightmare" button
-        final Color NIGHTMARE_BUTTON_COLOR = Color.RED;
+        final Color NIGHTMARE_BUTTON_COLOR = Color.DARKRED;
 
         for (int i = 0; i < buttonLabels.length; i++) {
             Text buttonText = new Text(buttonLabels[i]);
@@ -196,7 +238,7 @@ public class GameMap extends GameApplication {
             if (buttonLabels[i].equals("Nightmare")) {
                 buttonText.setFill(NIGHTMARE_BUTTON_COLOR);
             } else {
-                buttonText.setFill(Color.WHITE);
+                buttonText.setFill(Color.LIGHTGREY);
             }
 
             double centerX = getAppWidth() / 2 - buttonText.getLayoutBounds().getWidth() / 2;
@@ -210,38 +252,52 @@ public class GameMap extends GameApplication {
                 String buttonTextStr = ((Text) event.getSource()).getText();
                 // Add code to handle button click here
                 FXGL.getAudioPlayer().stopAllMusic();
-                getGameScene().addUINode(text);
-                getGameScene().addUINode(score);
 
                 if (buttonTextStr.equals("Easy")) {
                     Music easy = FXGL.getAssetLoader().loadMusic(easyTrack);
                     FXGL.getAudioPlayer().loopMusic(easy);
                     getGameScene().removeUINode(containerGroup);
+                    getGameScene().addUINode(text);
+                    getGameScene().addUINode(score);
+                    getGameScene().addUINode(text2);
+                    getGameScene().addUINode(score2);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/Snow.png?alt=media&token=0213e269-de1b-4212-9ea5-8be1e67b9bc0", 1100, 600, false, true));
                     level1.spawnEntity();
                 } else if (buttonTextStr.equals("Normal")) {
                     Music normal = FXGL.getAssetLoader().loadMusic(normalTrack);
                     FXGL.getAudioPlayer().loopMusic(normal);
                     getGameScene().removeUINode(containerGroup);
+                    getGameScene().addUINode(text);
+                    getGameScene().addUINode(score);
+                    getGameScene().addUINode(text2);
+                    getGameScene().addUINode(score2);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert1.jpg?alt=media&token=a3f398b9-aa7d-4d1f-a0ce-2b3092e2a185", 1100, 600, false, true));
                     level2.spawnEntity();
                 } else if (buttonTextStr.equals("Hard")) {
                     Music hard = FXGL.getAssetLoader().loadMusic(hardTrack);
                     FXGL.getAudioPlayer().loopMusic(hard);
                     getGameScene().removeUINode(containerGroup);
-                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert.jpg?alt=media&token=ee7446fc-c63a-4464-b653-8a48e48af8d2", 1100, 600, false, true));
-                    level2.spawnEntity();
+                    getGameScene().addUINode(text);
+                    getGameScene().addUINode(score);
+                    getGameScene().addUINode(text2);
+                    getGameScene().addUINode(score2);
+                    getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/desert1.jpg?alt=media&token=a3f398b9-aa7d-4d1f-a0ce-2b3092e2a185", 1100, 600, false, true));
+                    level3.spawnEntity();
+
                 } else if (buttonTextStr.equals("Nightmare")) {
                     Music nightmare = FXGL.getAssetLoader().loadMusic(nightmareTrack);
                     FXGL.getAudioPlayer().loopMusic(nightmare);
                     getGameScene().removeUINode(containerGroup);
+                    getGameScene().addUINode(text);
+                    getGameScene().addUINode(score);
+                    getGameScene().addUINode(text2);
+                    getGameScene().addUINode(score2);
                     getGameScene().setBackgroundRepeat(new Image("https://firebasestorage.googleapis.com/v0/b/iprop-games-database.appspot.com/o/stones.png?alt=media&token=a0a02a75-b79a-46db-951a-bfcdb5fb1319", 1100, 600, false, true));
-                    level2.spawnEntity();
+                    level4.spawnEntity();
                 }
 
                 // Add code to start the game here
             });
-
 
             buttonList.add(buttonText);
         }
@@ -413,9 +469,40 @@ public class GameMap extends GameApplication {
    @Override
     protected void onUpdate(double tpf) {
         super.onUpdate(tpf);
-        level1.wallSwap();
+         level1.wallSwap();
+       level2.wallSwap();
+       level3.wallSwap();
+       level4.wallSwap();
+
+
+
+
 
     }
+
+    private void showGameOver(String winner) throws FileNotFoundException {
+        writer.userWins(activeUser);
+        ArrayList<User> users = reader.readFile();
+
+        Collections.sort(users, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o2.wins - o1.wins;
+            }
+        });
+
+        String text = "";
+
+        for (User user : users) {
+            text += user;
+        }
+
+        getDialogService().showMessageBox(winner + " won!\n-------------------------\n" + text, getGameController()::exit);
+        System.out.println(users);
+    }
+
+
+
 
 
     public static void main(String[] args) {

@@ -13,8 +13,8 @@ import static java.lang.Math.signum;
 
 public class BallComponent extends Component {
 
-    private PhysicsComponent physics;
-    private Boolean isTouched = false;
+    public PhysicsComponent physics;
+    public Boolean isTouched = false;
     Random r = new Random();
     int low = -300;
     int high = 200;
@@ -30,7 +30,7 @@ public class BallComponent extends Component {
         physics.setVelocityY(r.nextInt(high-low) + low);
     }
 
-    private void limitVelocity() {
+    public void limitVelocity() {
         // we don't want the ball to move too slow in X direction
         if (abs(physics.getVelocityX()) < 5 * 60) {
             physics.setVelocityX(signum(physics.getVelocityX()) * 5 * 60);
@@ -41,7 +41,7 @@ public class BallComponent extends Component {
             physics.setVelocityY(signum(physics.getVelocityY()) * 5 * 60);
         }
     }
-    private void checkOffscreen() {
+    public void checkOffscreen() {
         if (getEntity().getBoundingBoxComponent().isOutside(getGameScene().getViewport().getVisibleArea())) {
             physics.overwritePosition(new Point2D(
                     getAppWidth() / 2,

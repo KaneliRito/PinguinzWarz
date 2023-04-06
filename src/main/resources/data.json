@@ -2,7 +2,7 @@
   {
     "username": "asd",
     "password": "asd",
-    "wins": 0
+    "wins": 1
   },
   {
     "username": "as",
@@ -22,7 +22,7 @@
   {
     "username": "",
     "password": "",
-    "wins": 0
+    "wins": 2
   },
   {
     "username": "asdfgh",
@@ -32,6 +32,16 @@
   {
     "username": "ee",
     "password": "",
+    "wins": 0
+  },
+  {
+    "username": "Trent",
+    "password": "test",
+    "wins": 0
+  },
+  {
+    "username": "trent",
+    "password": "test1",
     "wins": 0
   }
 ]

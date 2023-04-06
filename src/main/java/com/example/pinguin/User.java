@@ -14,6 +14,9 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("username: %s\npassword: %s\nhighscore: %s\n", this.username, this.password, this.wins);
+        if (this.username.equals("")) {
+            return String.format("Guest: %s\n", this.username, this.wins);
+        }
+        return String.format("%s: %s\n", this.username, this.wins);
     }
 }
