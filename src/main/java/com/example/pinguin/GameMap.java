@@ -8,7 +8,9 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 
+import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.HitBox;
 import com.example.pinguin.Levels.*;
 import javafx.scene.control.Label;
 
@@ -18,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.io.FileNotFoundException;
@@ -192,10 +195,15 @@ public class GameMap extends GameApplication {
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityType.BALL, EntityType.WALL) {
             @Override
             protected void onCollision(Entity ball, Entity wall) {
-                if (ball.getX() >= 1065)
+                if (ball.getX() >= 1110){
                     inc("player1score", +1);
-                else if (ball.getX() <= 25)
+                    ball.getComponent(BallComponent.class).resetPos();
+                }
+
+                else if (ball.getX() <= -10){
                     inc("player2score", +1);
+                    ball.getComponent(BallComponent.class).resetPos();
+                }
             }
         });
 
@@ -350,13 +358,6 @@ public class GameMap extends GameApplication {
             Button submitButton = new Button("Submit");
 
 
-            //        mainUi controller = new mainUi();
-//        UI ui = getAssetLoader().loadUI("main.fxml", controller);
-//        controller.getLabelScoreP1().textProperty().bind(getip("player1score").asString());
-//        controller.getLabelScoreP2().textProperty().bind(getip("player2score").asString());
-//        getGameScene().addUI(ui);
-
-
 
 
         cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -470,9 +471,20 @@ public class GameMap extends GameApplication {
         Entity walls = entityBuilder()
                 .type(EntityType.WALL)
                 .collidable()
-                .buildScreenBounds(150);
+                .at(-40,-1500)
+                //.buildScreenBounds(150);
+                .bbox(new HitBox(BoundingShape.box(20,3000)))
+                .build();
+        Entity walls2 = entityBuilder()
+                .type(EntityType.WALL)
+                .collidable()
+                .at(1140,-1500)
+                //.buildScreenBounds(150);
+                .bbox(new HitBox(BoundingShape.box(20,3000)))
+                .build();
 
         getGameWorld().addEntity(walls);
+        getGameWorld().addEntity(walls2);
     }
 
    @Override

@@ -20,6 +20,11 @@ public class BallComponent extends Component {
     int low = -300;
     int high = 200;
 
+    private Point2D startPos;
+
+    public void setStartPos(double x, double y) {
+        this.startPos = new Point2D(x, y);
+    }
 
     public Boolean getTouched() {
         return isTouched;
@@ -38,8 +43,16 @@ public class BallComponent extends Component {
                 physics.setVelocityY(-(r.nextInt(high-low) + low));
                 break;
             }
+            default:break;
         }
 
+    }
+
+    public void resetPos(){
+        physics.overwritePosition(startPos);
+        isTouched=false;
+        physics.setVelocityX(0);
+        physics.setVelocityY(0);
     }
 
     public void limitVelocity() {
@@ -53,22 +66,23 @@ public class BallComponent extends Component {
             physics.setVelocityY(signum(physics.getVelocityY()) * 5 * 60);
         }
     }
-    public void checkOffscreen() {
-        if (getEntity().getBoundingBoxComponent().isOutside(getGameScene().getViewport().getVisibleArea())) {
-            physics.overwritePosition(new Point2D(
-                    getAppWidth() / 2,
-                    getAppHeight() / 2
-            ));
-        }
-    }
+//    public void checkOffscreen() {
+//        if (getEntity().getBoundingBoxComponent().isOutside(getGameScene().getViewport().getVisibleArea())) {
+//            physics.overwritePosition(new Point2D(
+//                    getAppWidth() / 2,
+//                    getAppHeight() / 2
+//            ));
+//        }
+//    }
 
     public void onUpdate(double tpf) {
         if(!isTouched) {
             physics.setVelocityX(0);
+            physics.setVelocityY(0);
         }
         else{
             limitVelocity();
-            checkOffscreen();
+//            checkOffscreen();
         }
     }
 
