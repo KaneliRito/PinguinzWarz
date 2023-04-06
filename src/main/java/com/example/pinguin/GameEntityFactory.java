@@ -87,7 +87,7 @@ public class GameEntityFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(EntityType.WALL)
-                .viewWithBBox(new Rectangle(20, 60, Color.BLACK))
+                .viewWithBBox(new Rectangle(20, 60, Color.LIGHTBLUE))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new WallComponent())

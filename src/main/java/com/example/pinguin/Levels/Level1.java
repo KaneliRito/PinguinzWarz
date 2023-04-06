@@ -12,7 +12,7 @@ import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class Level1 implements Level {
     private Entity ball;
-    private Entity ball2;
+    private Entity ball10;
     private Entity ball3;
     private Entity upperWall;
     private Entity lowerWall;
@@ -34,10 +34,10 @@ public class Level1 implements Level {
         movingWall = spawn("movingwall",300,300);
         ball = spawn("ball", 145, 200);
         ball.getComponent(BallComponent.class).setStartPos(145,200);
-        ball2 = spawn("ball",895,200);
-        ball2.getComponent(BallComponent.class).setStartPos(895,200);
+        ball10 = spawn("ball",895,200);
+        ball10.getComponent(BallComponent.class).setStartPos(895,200);
         ballList.add(ball);
-        ballList.add(ball2);
+        ballList.add(ball10);
 
     }
     public void wallSwap() {

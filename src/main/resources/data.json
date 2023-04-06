@@ -2,7 +2,7 @@
   {
     "username": "asd",
     "password": "asd",
-    "wins": 2
+    "wins": 1
   },
   {
     "username": "as",
@@ -10,38 +10,13 @@
     "wins": 0
   },
   {
-    "username": "asdf",
-    "password": "asdf",
-    "wins": 0
-  },
-  {
-    "username": "rtyui",
-    "password": "rtyu",
-    "wins": 0
+    "username": "sjon",
+    "password": "yvghjkl;",
+    "wins": 1
   },
   {
     "username": "",
     "password": "",
-    "wins": 6
-  },
-  {
-    "username": "asdfgh",
-    "password": "asdfg",
-    "wins": 0
-  },
-  {
-    "username": "ee",
-    "password": "",
-    "wins": 0
-  },
-  {
-    "username": "Trent",
-    "password": "test",
-    "wins": 0
-  },
-  {
-    "username": "trent",
-    "password": "test1",
     "wins": 0
   }
 ]

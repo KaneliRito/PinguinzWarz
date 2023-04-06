@@ -176,8 +176,8 @@ public class GameMap extends GameApplication {
                 }
             }
         });
-        playerentity = spawn("player", 100, 100);
-        player2entity = spawn("player2", 950, 100);
+        playerentity = spawn("player", 100, 200);
+        player2entity = spawn("player2", 950, 200);
         player = playerentity.getComponent(PlayerComponent.class);
         player2 = player2entity.getComponent(PlayerComponent.class);
         level1.spawnEntity();
@@ -519,7 +519,7 @@ public class GameMap extends GameApplication {
         }
 
         getDialogService().showMessageBox(winner + " won!\n-------------------------\n" + text, getGameController()::exit);
-        System.out.println(users);
+
     }
 
 
