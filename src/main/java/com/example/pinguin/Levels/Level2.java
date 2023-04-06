@@ -11,40 +11,33 @@ import java.util.List;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class Level2 implements Level {
+    public List<Entity> getBallList() {
+        return ballList;
+    }
+
+    private List<Entity> ballList = new ArrayList<>();
     private Entity ball;
     private Entity ball2;
     private Entity ball3;
-    private Entity upperWall;
-    private Entity lowerWall;
     private Entity movingWall;
     private Entity movingWall2;
     private Entity movingWall3;
 
-    public Entity getUpperWall() {
-        return upperWall;
-    }
-
-    public Entity getLowerWall() {
-        return lowerWall;
-    }
 
     public void spawnEntity(){
-        lowerWall = spawn("sidewall",0,550);
-        upperWall = spawn("sidewall",0,50);
-        movingWall = spawn("movingwall",300,300);
+        movingWall = spawn("movingwall",500,250);
 
 
-        ball = spawn("ball", 145, 100);
-        ball2 = spawn("ball", 145, 200);
+        ball = spawn("ball", 155, 100);
+        ball2 = spawn("ball", 155, 200);
 
         ballList.add(ball);
         ballList.add(ball2);
 
     }
-    public void wallSwap() {
+    public void wallSwap(Entity lowerWall, Entity upperWall) {
         if(lowerWall != null){
             movingWall.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
-
 
         }
     }
