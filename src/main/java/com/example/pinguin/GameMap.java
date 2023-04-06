@@ -507,7 +507,7 @@ public class GameMap extends GameApplication {
         }
 
         getDialogService().showMessageBox(winner + " won!\n-------------------------\n" + text, getGameController()::exit);
-        System.out.println(users);
+
     }
 
 
