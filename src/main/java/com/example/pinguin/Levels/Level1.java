@@ -31,7 +31,7 @@ public class Level1 implements Level {
     public void spawnEntity(){
         lowerWall = spawn("sidewall",0,570);
         upperWall = spawn("sidewall",0,0);
-        movingWall = spawn("movingwall",300,300);
+        movingWall = spawn("movingwall",300,250);
         ball = spawn("ball", 145, 200);
         ball.getComponent(BallComponent.class).setStartPos(145,200);
         ball10 = spawn("ball",895,200);

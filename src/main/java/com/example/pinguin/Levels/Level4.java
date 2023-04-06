@@ -38,9 +38,8 @@ public class Level4 implements Level {
     public void spawnEntity(){
         lowerWall = spawn("sidewall",0,570);
         upperWall = spawn("sidewall",0,0);
-        movingWall = spawn("movingwall",300,300);
-        movingWall2 = spawn("movingwall",500,200);
-        movingWall3 = spawn("movingwall",700,400);
+        movingWall2 = spawn("movingwall",500,150);
+        movingWall3 = spawn("movingwall",700,450);
         ball2 = spawn("ball", 145, 100);
         ball2.getComponent(BallComponent.class).setStartPos(145,100);
         ball3 = spawn("ball", 145, 300);
@@ -59,14 +58,11 @@ public class Level4 implements Level {
         ballList.add(ball2);
         ballList.add(ball3);
         ballList.add(ball4);
-
-
-
     }
+
 
     public void wallSwap() {
         if(lowerWall != null){
-            movingWall.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
             movingWall2.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
             movingWall3.getComponent(WallComponent.class).swapMovement(lowerWall, upperWall);
 
