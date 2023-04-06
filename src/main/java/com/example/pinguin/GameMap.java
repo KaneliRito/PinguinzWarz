@@ -55,7 +55,6 @@ public class GameMap extends GameApplication {
     private Level2 level2;
     private Level3 level3;
     private Level4 level4;
-    private BaseLevel baseLevel;
 
     //private InputController inputController;
 
@@ -70,7 +69,6 @@ public class GameMap extends GameApplication {
         level2 = new Level2();
         level3 = new Level3();
         level4 = new Level4();
-        baseLevel = new BaseLevel();
 
     }
 
