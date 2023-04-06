@@ -3,6 +3,7 @@ package com.example.pinguin.Levels;
 
 
 import com.almasb.fxgl.entity.Entity;
+import com.example.pinguin.BallComponent;
 import com.example.pinguin.WallComponent;
 
 import java.util.ArrayList;
@@ -33,11 +34,13 @@ public class Level2 implements Level {
         lowerWall = spawn("sidewall",0,570);
         upperWall = spawn("sidewall",0,0);
         movingWall = spawn("movingwall",300,300);
-        ball11 = spawn("ball",895,200);
-        ball2 = spawn("ball", 145, 200);
-        ball12 = spawn("ball",895,300);
+        ball11 = spawn("ball",895,100);
+        ball11.getComponent(BallComponent.class).setStartPos(895,100);
+        ball2 = spawn("ball", 145, 100);
+        ball2.getComponent(BallComponent.class).setStartPos(145,100);
+
         ballList.add(ball11);
-        ballList.add(ball12);
+
         ballList.add(ball2);
 
     }

@@ -512,6 +512,7 @@ public class GameMap extends GameApplication {
             }
         });
 
+
         String text = "";
 
         for (User user : users) {
